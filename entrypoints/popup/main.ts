@@ -1,6 +1,6 @@
 import { Setting, SettingCategory, settings } from "@/utils/settings";
 
-function createSettingsRow(
+export function createSettingsRow(
   setting: Setting,
   initialValue: boolean,
 ): HTMLLabelElement {
