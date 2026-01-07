@@ -10,13 +10,17 @@ export default defineContentScript({
     };
 
     const keys = settings.map((setting) => setting.key);
-    const stored = await browser.storage.local.get(keys);
+    try {
+      const stored = await browser.storage.local.get(keys);
 
-    keys.forEach((key) => {
-      if (stored[key]) {
-        toggle(key, true);
-      }
-    });
+      keys.forEach((key) => {
+        if (stored[key]) {
+          toggle(key, true);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     browser.storage.onChanged.addListener((changes, area) => {
       if (area !== "local") return;
