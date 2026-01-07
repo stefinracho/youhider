@@ -1,4 +1,5 @@
 import { Setting, SettingCategory, settings } from "@/utils/settings";
+import { browser } from "wxt/browser";
 
 export function createSettingsRow(
   setting: Setting,
@@ -29,10 +30,7 @@ export function createSettingsRow(
   return label;
 }
 
-(async () => {
-  const form = document.getElementById("settings-form");
-  if (!form) return;
-
+export async function mountSettings(form: HTMLElement) {
   const keys = settings.map((setting) => setting.key);
 
   let stored: Record<string, boolean> = {};
@@ -75,4 +73,9 @@ export function createSettingsRow(
   );
 
   form.appendChild(fragment);
+}
+
+(async () => {
+  const form = document.getElementById("settings-form");
+  if (form) await mountSettings(form);
 })();
