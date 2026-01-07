@@ -1,4 +1,4 @@
-import contentScript from "./content";
+import contentScript from "@/entrypoints/content";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeBrowser } from "#imports";
 import type { ContentScriptContext } from "#imports";
