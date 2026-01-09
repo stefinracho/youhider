@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
-    "test": "vitest",
+    "test:unit": "vitest",
+    "test:e2e": "playwright test",
+    "test:all": "vitest run && npm run test:e2e",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
