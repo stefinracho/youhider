@@ -15,6 +15,7 @@ export const test = base.extend<{
       args: [
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`,
+        `--lang=en-US`,
       ],
     });
     await use(context);
@@ -22,6 +23,11 @@ export const test = base.extend<{
   },
   extensionId: async ({ context }, use) => {
     const page = await context.newPage();
+
+    const language = await page.evaluate(() => navigator.language);
+    if (language != "en-US")
+      throw new Error(`Language "${language}" not en-US`);
+
     await page.goto("chrome://extensions");
 
     const extensionItem = page.locator("extensions-item", {
