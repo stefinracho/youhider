@@ -16,6 +16,8 @@
     "postinstall": "wxt prepare"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
     "happy-dom": "^20.0.11",
     "typescript": "^5.9.2",
     "vitest": "^4.0.16",
