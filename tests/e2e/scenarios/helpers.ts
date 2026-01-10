@@ -30,6 +30,7 @@ export function stabilizeMetadata(dateText: string = "1 month ago") {
 
 export function seedHomeFeed() {
   return async function (page: Page) {
+    await page.goto(URLS.VIDEO.ME_AT_THE_ZOO);
     await page.waitForTimeout(5000); // Play video to record 'history'
     await page.goto(URLS.HOME);
     await page.locator("ytd-rich-item-renderer").first().waitFor();

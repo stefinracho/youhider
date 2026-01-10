@@ -9,7 +9,8 @@ test.describe("Visual Regressions Tests", () => {
       extensionId,
     }) => {
       await page.setViewportSize({ width: 1920, height: 1080 });
-      await page.goto(scenario.url, { waitUntil: "domcontentloaded" });
+      if (scenario.url)
+        await page.goto(scenario.url, { waitUntil: "domcontentloaded" });
 
       const popupPage = await context.newPage();
       await popupPage.goto(`chrome-extension://${extensionId}/popup.html`);

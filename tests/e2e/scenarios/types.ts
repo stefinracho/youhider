@@ -3,9 +3,9 @@ import { Locator, Page } from "@playwright/test";
 export type VisualScenario = {
   settingId: string;
   variant: string;
-  url: string;
-  beforeTest?: (page: Page) => Promise<void>;
   snapshotContainer: (page: Page) => Locator;
+  url?: string;
+  beforeTest?: (page: Page) => Promise<void>;
   prepareElement?: (page: Page, target: Locator) => Promise<void>;
 };
 
