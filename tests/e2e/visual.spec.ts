@@ -1,9 +1,9 @@
 import { expect, test } from "./fixtures";
-import { SCENARIOS } from "./visual-scenarios";
+import { SCENARIOS } from "./scenarios";
 
 test.describe("Visual Regressions Tests", () => {
   for (const scenario of SCENARIOS) {
-    test(`${scenario.settingId}-${scenario.name}`, async ({
+    test(`${scenario.settingId}-${scenario.variant}`, async ({
       page,
       context,
       extensionId,
@@ -19,14 +19,18 @@ test.describe("Visual Regressions Tests", () => {
       await popupPage.close();
 
       await page.bringToFront();
+
+      if (scenario.beforeTest) await scenario.beforeTest(page);
+
       await expect(
         page.locator(`html[data-yh-${scenario.settingId}]`),
       ).toBeAttached();
 
-      const targetLocator = scenario.target(page);
+      const targetLocator = scenario.snapshotContainer(page);
       await targetLocator.waitFor({ state: "attached" });
 
-      if (scenario.setup) await scenario.setup(page, targetLocator);
+      if (scenario.prepareElement)
+        await scenario.prepareElement(page, targetLocator);
 
       await expect(targetLocator).toBeVisible();
 
@@ -36,7 +40,7 @@ test.describe("Visual Regressions Tests", () => {
       if (!box) throw new Error("Target element not found for bounding box.");
 
       await expect(page).toHaveScreenshot(
-        `${scenario.settingId}-${scenario.name.replace(/\s+/g, "-").toLowerCase()}.png`,
+        `${scenario.settingId}-${scenario.variant.replace(/\s+/g, "-").toLowerCase()}.png`,
         {
           clip: box,
         },
