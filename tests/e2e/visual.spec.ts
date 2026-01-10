@@ -3,7 +3,11 @@ import { SCENARIOS } from "./visual-scenarios";
 
 test.describe("Visual Regressions Tests", () => {
   for (const scenario of SCENARIOS) {
-    test(scenario.name, async ({ page, context, extensionId }) => {
+    test(`${scenario.settingId}-${scenario.name}`, async ({
+      page,
+      context,
+      extensionId,
+    }) => {
       await page.setViewportSize({ width: 1920, height: 1080 });
       await page.goto(scenario.url, { waitUntil: "domcontentloaded" });
 
@@ -20,10 +24,13 @@ test.describe("Visual Regressions Tests", () => {
       ).toBeAttached();
 
       const targetLocator = scenario.target(page);
+      await targetLocator.waitFor({ state: "attached" });
 
       if (scenario.setup) await scenario.setup(page, targetLocator);
 
       await expect(targetLocator).toBeVisible();
+
+      await targetLocator.scrollIntoViewIfNeeded();
 
       const box = await targetLocator.boundingBox();
       if (!box) throw new Error("Target element not found for bounding box.");
