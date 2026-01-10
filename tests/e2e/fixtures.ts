@@ -16,6 +16,7 @@ export const test = base.extend<{
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`,
         `--lang=en-US`,
+        `--autoplay-policy=no-user-gesture-required`,
       ],
     });
     await use(context);
