@@ -1,44 +1,67 @@
 import { Locator, Page } from "@playwright/test";
 import { forceStableLayout } from "./utils";
 
+const TEST_VIDEO_URL = "https://www.youtube.com/watch?v=jNQXAC9IVRw"; // Me at the zoo
+
 export type VisualScenario = {
-  name: string;
   settingId: string;
+  name: string;
   url: string;
   target: (page: Page) => Locator;
   setup?: (page: Page, target: Locator) => Promise<void>;
 };
 
-const hideRelatedVideosScenarios: VisualScenario[] = [
+type ScenarioBlueprint = Omit<VisualScenario, "settingId">;
+
+function defineScenarios(
+  settingId: string,
+  blueprints: ScenarioBlueprint[],
+): VisualScenario[] {
+  return blueprints.map((blueprint) => ({ ...blueprint, settingId }));
+}
+
+const relatedVideos = defineScenarios("hiderelatedvideos", [
   {
-    name: "Hide Related Videos",
-    settingId: "hiderelatedvideos",
-    url: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    name: "WATCH>related",
+    url: TEST_VIDEO_URL,
     target: (page: Page) => {
       return page.locator("#related.style-scope.ytd-watch-flexy");
     },
     setup: async (_page: Page, target: Locator) => {
-      await target.waitFor({ state: "attached" });
-
       await forceStableLayout(target, { width: 50, height: 100 });
     },
   },
-];
+]);
 
-const hideViewCountScenarios: VisualScenario[] = [
+const viewCounts = defineScenarios("hideviewcount", [
   {
-    name: "Hide View Count (Related)",
-    settingId: "hideviewcount",
-    url: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    name: "WATCH>description",
+    url: TEST_VIDEO_URL,
     target: (page: Page) => {
       return page
-        .locator(".yt-content-metadata-view-model__metadata-row")
-        .filter({ hasText: /views|ago/ })
+        .locator("yt-formatted-string#info")
+        .filter({ hasText: /view|ago/ })
         .first();
     },
     setup: async (_page: Page, target: Locator) => {
-      await target.waitFor({ state: "attached" });
+      await forceStableLayout(target, { width: 300, height: 30 });
 
+      const dateElement = target.getByText(/ago/).first();
+      await dateElement.evaluate((node) => {
+        node.textContent = "20 years ago"; // Arbitrary
+      });
+    },
+  },
+  {
+    name: "WATCH>related",
+    url: TEST_VIDEO_URL,
+    target: (page: Page) => {
+      return page
+        .locator(".yt-content-metadata-view-model__metadata-row")
+        .filter({ hasText: /view|ago/ })
+        .first();
+    },
+    setup: async (_page: Page, target: Locator) => {
       await forceStableLayout(target, { width: 300, height: 30 });
 
       const dateElement = target.getByText(/ago/).first();
@@ -47,9 +70,6 @@ const hideViewCountScenarios: VisualScenario[] = [
       });
     },
   },
-];
+]);
 
-export const SCENARIOS: VisualScenario[] = [
-  ...hideRelatedVideosScenarios,
-  ...hideViewCountScenarios,
-];
+export const SCENARIOS: VisualScenario[] = [...relatedVideos, ...viewCounts];
