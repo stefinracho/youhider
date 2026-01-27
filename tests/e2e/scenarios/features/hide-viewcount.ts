@@ -9,6 +9,7 @@ import {
 export const viewCountsScenarios = defineScenarios("hideviewcount", [
   {
     variant: "HOME>regular videos",
+    beforeTest: seedHomeFeed(),
     snapshotContainer: (page: Page) => {
       return page
         .locator(
@@ -16,29 +17,28 @@ export const viewCountsScenarios = defineScenarios("hideviewcount", [
         )
         .first();
     },
-    beforeTest: seedHomeFeed(),
     prepareElement: stabilizeMetadata(),
   },
   {
     variant: "WATCH>description",
+    url: URLS.VIDEO.ME_AT_THE_ZOO,
     snapshotContainer: (page: Page) => {
       return page
         .locator("yt-formatted-string#info")
         .filter({ hasText: /view|ago/ })
         .first();
     },
-    url: URLS.VIDEO.ME_AT_THE_ZOO,
     prepareElement: stabilizeMetadata(),
   },
   {
     variant: "WATCH>related",
+    url: URLS.VIDEO.ME_AT_THE_ZOO,
     snapshotContainer: (page: Page) => {
       return page
         .locator(".yt-content-metadata-view-model__metadata-row")
         .filter({ hasText: /view|ago/ })
         .first();
     },
-    url: URLS.VIDEO.ME_AT_THE_ZOO,
     prepareElement: stabilizeMetadata(),
   },
 ]);
