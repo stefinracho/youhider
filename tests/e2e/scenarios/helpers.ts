@@ -1,6 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { ScenarioBlueprint, VisualScenario } from "./types";
 import { forceStableLayout } from "../utils";
+import { SettingId } from "@/utils/settings";
 
 export const URLS = {
   HOME: "https://www.youtube.com/",
@@ -10,7 +11,7 @@ export const URLS = {
 };
 
 export function defineScenarios(
-  settingId: string,
+  settingId: SettingId,
   blueprints: ScenarioBlueprint[],
 ): VisualScenario[] {
   return blueprints.map((blueprint) => ({ ...blueprint, settingId }));
