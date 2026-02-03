@@ -10,7 +10,7 @@ export interface Setting {
   cssFile: PublicPath;
 }
 
-export const settings: Setting[] = [
+export const settings = [
   {
     key: "hidecommentcount",
     label: "Hide Comment Count",
@@ -109,4 +109,6 @@ export const settings: Setting[] = [
     category: "Metrics",
     cssFile: "/css/hide-viewcount.css",
   },
-];
+] as const;
+
+export type SettingId = (typeof settings)[number]["key"];

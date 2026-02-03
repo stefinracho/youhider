@@ -1,7 +1,8 @@
+import { SettingId } from "@/utils/settings";
 import { Locator, Page } from "@playwright/test";
 
 export type VisualScenario = {
-  settingId: string;
+  settingId: SettingId;
   variant: string;
   url?: string;
   beforeTest?: (page: Page) => Promise<void>;
