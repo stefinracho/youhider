@@ -17,15 +17,22 @@ export function defineScenarios(
   return blueprints.map((blueprint) => ({ ...blueprint, settingId }));
 }
 
-export function stabilizeMetadata(dateText: string = "1 month ago") {
+export function stabilizeMetadata(
+  dateText: string = "1 month ago",
+  viewText: string = "9,999 views",
+) {
   return async function (_page: Page, target: Locator) {
     await forceStableLayout(target, { width: 300, height: 30 });
 
     const dateElement = target.getByText(/ago/).first();
+    const viewElement = target.getByText(/view/).first();
 
     await dateElement.evaluate((node, text) => {
       node.textContent = text;
     }, dateText);
+    await viewElement.evaluate((node, text) => {
+      node.textContent = text;
+    }, viewText);
   };
 }
 
