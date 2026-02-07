@@ -7,7 +7,11 @@ html[data-yh-hideplayables] {
 
   /*** PLAYABLES ***/
   ytd-browse[page-subtype="playables"], /* playables, entire page */
-  ytd-browse[page-subtype="mini_app"] /* playables, game */ {
+  ytd-browse[page-subtype="mini_app"], /* playables, game */
+
+  /*** WATCH ***/
+  /* related */
+  ytd-horizontal-card-list-renderer[has-portrait-mini-app] /* playables */ {
     display: none !important;
   }
 }
