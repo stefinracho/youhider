@@ -68,7 +68,7 @@ html[data-yh-hideviewcount] {
 
 html[data-yh-hideviewcount][data-yh-hideuploaddate] {
   /*** WATCH ***/
-  ytd-watch-info-text:not(:has(a)) /* ytd-watch-info-text */ {
+  ytd-watch-info-text:not(:has(a)):not(:has(span:nth-of-type(5))) /* ytd-watch-info-text */ {
     display: none !important;
   }
 }
