@@ -14,7 +14,9 @@ export function defineScenarios(
   settingId: SettingId,
   blueprints: ScenarioBlueprint[],
 ): VisualScenario[] {
-  return blueprints.map((blueprint) => ({ ...blueprint, settingId }));
+  return blueprints
+    .filter((blueprint) => !(process.env.CI && blueprint.skipOnCI))
+    .map((blueprint) => ({ ...blueprint, settingId }));
 }
 
 export function stabilizeMetadata(
