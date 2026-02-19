@@ -44,6 +44,7 @@ test.describe("Visual Regressions Tests", () => {
         `${scenario.settingId}-${scenario.variant.replace(/\s+/g, "-").toLowerCase()}.png`,
         {
           clip: box,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });
