@@ -10,4 +10,6 @@ export type VisualScenario = {
   prepareElement?: (page: Page, target: Locator) => Promise<void>;
 };
 
-export type ScenarioBlueprint = Omit<VisualScenario, "settingId">;
+export type ScenarioBlueprint = Omit<VisualScenario, "settingId"> & {
+  skipOnCI?: boolean;
+};

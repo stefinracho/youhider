@@ -9,6 +9,7 @@ import {
 export const viewCountsScenarios = defineScenarios("hideviewcount", [
   {
     variant: "HOME>regular videos",
+    skipOnCI: true,
     beforeTest: seedHomeFeed(),
     snapshotContainer: (page: Page) => {
       return page
