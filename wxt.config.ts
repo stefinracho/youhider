@@ -20,13 +20,17 @@ export default defineConfig({
       },
     ],
     icons: {
-      "16": "icon/YouHider-16.png",
-      "32": "icon/YouHider-32.png",
+      "16": "icon/youhider-16.png",
+      "32": "icon/youhider-32.png",
+      "48": "icon/youhider-48.png",
+      "128": "icon/youhider-128.png",
     },
     action: {
       default_icon: {
-        "16": "icon/YouHider-16.png",
-        "32": "icon/YouHider-32.png",
+        "16": "icon/youhider-16.png",
+        "32": "icon/youhider-32.png",
+        "48": "icon/youhider-48.png",
+        "128": "icon/youhider-128.png",
       },
       default_title: "YouHider",
     },
