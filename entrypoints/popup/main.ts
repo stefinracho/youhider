@@ -41,8 +41,8 @@ export async function mountSettings(form: HTMLElement) {
   }
 
   const categories: Record<SettingCategory, Setting[]> = {
-    Metrics: [],
     Content: [],
+    Metrics: [],
   };
 
   settings.forEach((setting) => {
